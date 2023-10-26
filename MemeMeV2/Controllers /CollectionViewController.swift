@@ -17,28 +17,30 @@ class CollectionViewController: UICollectionViewController {
         return appDelegate.memes
     }
     
-    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
-    @IBOutlet weak var create: UIBarButtonItem!
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print(memes)
-//        let space:CGFloat = 3.0
-//        let dimension = (view.frame.size.width - (2 * space)) / 3.0
-//
-//        flowLayout.minimumInteritemSpacing = space
-//        flowLayout.minimumLineSpacing = space
-//        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
         
         collectionView.reloadData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
-        collectionView.reloadData()
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let space:CGFloat = 3.0
+        let width = (view.frame.size.width - (2 * space)) / 3.0
+        let height = (view.frame.size.height - (2 * space)) / 3.0
+        
+
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        flowLayout.itemSize = CGSize(width: width, height: height)
+        
+        
     }
+    
     
     // MARK: Collection View Data Source
     
@@ -53,11 +55,10 @@ class CollectionViewController: UICollectionViewController {
         //use the meme collection view cell identifier
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as! MemeCollectionViewCell
         
-        let meme = self.memes[(indexPath as NSIndexPath).row]
+        let meme = memes[(indexPath as NSIndexPath).item]
         
         // Set the meme image to the imageView image property
-        cell.memeImageView.image = meme.memed
-        
+        cell.memeImageView?.image = meme.memed
         
         return cell
     }
@@ -65,12 +66,12 @@ class CollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath:IndexPath) {
         
         let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
-        detailController.meme = self.memes[(indexPath as NSIndexPath).row]
-        self.navigationController!.pushViewController(detailController, animated: true)
+        detailController.meme = memes[(indexPath as NSIndexPath).row]
+        navigationController!.pushViewController(detailController, animated: true)
         
     }
     
-    //go to the original viewcontroller
+    //go to the original ViewController
     @IBAction func plusButtonTapped(_ sender: UIBarButtonItem) {
         let createMemesVC = storyboard?.instantiateViewController(withIdentifier: "CreateAMeme") as! ViewController
         present(createMemesVC, animated: true, completion: nil)
