@@ -73,7 +73,7 @@ class CollectionViewController: UICollectionViewController {
     
     //go to the original ViewController
     @IBAction func plusButtonTapped(_ sender: UIBarButtonItem) {
-        let createMemesVC = storyboard?.instantiateViewController(withIdentifier: "CreateAMeme") as! ViewController
+        let createMemesVC = storyboard?.instantiateViewController(withIdentifier: "CreateAMeme") as! EditMemeViewController 
         present(createMemesVC, animated: true, completion: nil)
     }
 }

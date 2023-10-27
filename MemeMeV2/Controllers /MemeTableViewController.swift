@@ -20,11 +20,6 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @IBOutlet weak var tableView: UITableView!
-    
-    override func viewDidLoad() {
-            
-            super.viewDidLoad()
-    }
         
     override func viewWillAppear(_ animated: Bool) {
             
@@ -60,7 +55,7 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     //go to the original ViewController
     @IBAction func plusButtonTapped(_ sender: UIBarButtonItem) {
-        let createMemesVC = storyboard?.instantiateViewController(withIdentifier: "CreateAMeme") as! ViewController
+        let createMemesVC = storyboard?.instantiateViewController(withIdentifier: "CreateAMeme") as! EditMemeViewController
         present(createMemesVC, animated: true, completion: nil)
     }
     
